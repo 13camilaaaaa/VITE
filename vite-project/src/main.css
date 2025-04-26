@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(255, 255, 255);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: rgb(0, 0, 0);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(129, 163, 131, 0.947);
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.menu__link {
+  padding: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  font-size: 20px;
+}
