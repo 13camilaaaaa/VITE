@@ -1,36 +1,13 @@
 import './main.css';
-
-const app = document.querySelector('#app');
-
-const header = document.querySelector('#header');
-header.classList.add('container', 'header');
-
-const div = document.createElement('div');
-div.classList.add('menu');
-
-const categorias = document.createElement('a');
-categorias.textContent = 'Categorias';
-categorias.classList.add('menu__link');
-categorias.setAttribute("href", '#categorias');
-
-const productos = document.createElement('a');
-productos.textContent = 'Productos';
-productos.classList.add('menu__link');
-productos.setAttribute("href", '#productos');
+import './Componentes/header.js';
+import { loadView } from './helpers/loadView.js';
+import { router } from './router/router.js';
 
 
-header.append(div);
-div.append(categorias, productos);
 
-const loadView = async () => {
-  const hash = location.hash.slice(1);
-  const response = await fetch(`./src/views/${hash}/index.html`);
-  const html = await response.text();
-
-  app.innerHTML = html;
-}
-
-window.addEventListener('hashchange', loadView);
+window.addEventListener('hashchange', () => {
+  router(app);
+});
 
 
 
