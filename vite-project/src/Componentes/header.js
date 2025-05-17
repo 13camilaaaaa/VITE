@@ -17,5 +17,5 @@ productos.classList.add('menu__link');
 productos.setAttribute("href", '#productos');
 
 header.append(div);
-div.append(categorias, productos);
+div.append(categorias,  productos);
 
