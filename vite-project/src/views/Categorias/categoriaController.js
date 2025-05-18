@@ -1,4 +1,5 @@
-import { listar_categorias } from "./listar_categorias";
+import { listar_categorias } from "../../casos de uso/categoria/listar_categorias";
+import { eliminarController } from "../../casos de uso/categoria/eliminarcaController.js";
 
 export const categoriaController = async () => {
     await new Promise(requestAnimationFrame);
@@ -47,7 +48,13 @@ export const categoriaController = async () => {
             botonEditar.classList.add("btn", "btn--small", "editar");
             botonEliminar.classList.add("btn", "btn--small", "btn--danger", "eliminar");
 
-            // Agregamos los botones al div contenedor
+            // nuevo: evento de eliminacion
+            botonEliminar.dataset.id = categoria.id;
+            botonEliminar.addEventListener("click", async () => {
+                await eliminarController({ id: categoria.id });
+                await lista_categorias(); // refresca la lista despues de eliminar
+            });
+
             div.append(botonEditar, botonEliminar);
             acciones.append(div);
         });
@@ -55,5 +62,4 @@ export const categoriaController = async () => {
 
     // Llamamos a la funcion lista_categorias
     lista_categorias();
-
 }

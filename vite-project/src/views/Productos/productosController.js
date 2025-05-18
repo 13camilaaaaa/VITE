@@ -1,7 +1,7 @@
 
-import { listar_productos } from "./listar_productos";
-import { listar_categorias } from "../Categorias/listar_categorias";
-
+import { listar_productos } from "../../casos de uso/productos/listar_productos";
+import { listar_categorias } from "../../casos de uso/categoria/listar_categorias";
+import { eliminarproController } from "../../casos de uso/productos/eliminarproController";
 
 export const productoController = async () => {
     await new Promise(requestAnimationFrame);
@@ -12,11 +12,12 @@ export const productoController = async () => {
     const precio = document.querySelector("#precio");
     const categoria_id = document.querySelector("#categoria_id");
 
-
     const lista_productos = async () => {
-        const response = await listar_productos(); // Llamada a listar categorías
-
+        const response = await listar_productos();
+        const data = await listar_categorias(); // Llamada a listar categorías
+        
         const productos = response;
+        const categorias = data;
         const tbody = document.querySelector("tbody");
         tbody.innerHTML = "";
 
@@ -40,21 +41,29 @@ export const productoController = async () => {
             cellNombre.textContent = productos.nombre;
             cellDescripcion.textContent = productos.descripcion;
             cellPrecio.textContent = productos.precio;
-            cellCategoria.textContent = productos.categoria_id;
+            cellCategoria.textContent = categorias.find((categoria) => categoria.id === productos.categoria_id)?.nombre || "Sin categoría";
 
            // Creamos los elementos de botones para editar y eliminar
             const div = document.createElement('div');
-            const botonEditar = document.createElement('button');
+            const botonEditar = document.createElement('a');
             const botonEliminar = document.createElement('button');
 
             // Asignamos los textos a los botones
             botonEditar.textContent = "Editar";
             botonEliminar.textContent = "Eliminar";
 
+            botonEditar.setAttribute("href", `#editarproducto/${productos.id}`);
+
             // Asignamos las clases a los botones y al div contenedor
             div.classList.add("botonera");
             botonEditar.classList.add("btn", "btn--small", "editar");
             botonEliminar.classList.add("btn", "btn--small", "btn--danger", "eliminar");
+
+            botonEliminar.dataset.id = productos.id;            
+            botonEliminar.addEventListener("click", async() => {
+                await eliminarproController({ id: productos.id });
+                await lista_productos(); // refresca la lista despues de eliminar
+            })
 
             div.append(botonEditar, botonEliminar);
             acciones.append(div);
