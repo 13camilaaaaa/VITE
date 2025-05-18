@@ -58,11 +58,13 @@ export const productoController = async () => {
             div.classList.add("botonera");
             botonEditar.classList.add("btn", "btn--small", "editar");
             botonEliminar.classList.add("btn", "btn--small", "btn--danger", "eliminar");
+            
+            // Asignamos el id a los tr para poder eliminarlos y identificarlos
+            tr.setAttribute("id", `user_${productos.id}`);
 
             botonEliminar.dataset.id = productos.id;            
             botonEliminar.addEventListener("click", async() => {
                 await eliminarproController({ id: productos.id });
-                await lista_productos(); // refresca la lista despues de eliminar
             })
 
             div.append(botonEditar, botonEliminar);

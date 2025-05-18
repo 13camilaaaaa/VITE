@@ -7,6 +7,8 @@ export const eliminarproController = async (a) => {
         });
         const result = await request.json();
         if (result.success) {
+            const tr = document.querySelector(`#user_${a.id}`);
+            tr.remove();
             Swal.fire({
                 title: 'Muy bien!',
                 text: result.message,
